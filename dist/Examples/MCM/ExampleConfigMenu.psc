@@ -10,9 +10,10 @@ scriptname ExampleConfigMenu extends SKI_ConfigBase
 ; 1 - Initial version
 ; 2 - Added color option
 ; 3 - Added keymap option
+; 4 - Added input option
 
 int function GetVersion()
-	return 3 ; Default version
+	return 4
 endFunction
 
 
@@ -56,6 +57,14 @@ int			_keymapOID_K
 
 ; State
 int			_myKey					= -1
+
+; --- Version 4 ---
+
+; OIDs
+int			_inputOID_I
+
+; State
+string		_myInput				= "CHANGE ME!"
 
 
 ; INITIALIZATION ----------------------------------------------------------------------------------
@@ -132,6 +141,8 @@ event OnPageReset(string a_page)
 
 		_colorOID_C = AddColorOption("Color", _color)
 		_keymapOID_K = AddKeyMapOption("KeyMap", _myKey)
+
+		_inputOID_I = AddInputOption("Input", _myInput)
 	
 	elseIf (a_page == "Another Page")
 
@@ -262,6 +273,25 @@ event OnOptionKeyMapChange(int a_option, int a_keyCode, string a_conflictControl
 			_myKey = a_keyCode
 			SetKeymapOptionValue(a_option, a_keyCode)
 		endIf
+	endIf
+endEvent
+
+; @implements SKI_ConfigBase
+event OnOptionInputOpen(int a_option)
+	{Called when a text input option has been selected}
+
+	if (a_option == _inputOID_I)
+		SetInputDialogStartText(_myInput)
+	endIf
+endEvent
+
+; @implements SKI_ConfigBase
+event OnOptionInputAccept(int a_option, string a_input)
+	{Called when a new text input has been accepted}
+
+	if (a_option == _inputOID_I)
+		_myInput = a_input
+		SetInputOptionValue(a_option, a_input)
 	endIf
 endEvent
 

@@ -16,6 +16,7 @@ int			_mySliderOID_S
 int			_myMenuOID_M
 int			_myColorOID_C
 int			_myKeyOID_K
+int			_myInputOID_I
 
 ; State
 
@@ -118,6 +119,20 @@ endEvent
 ; @implements SKI_ConfigBase
 event OnOptionKeyMapChange(int a_option, int a_keyCode, string a_conflictControl, string a_conflictName)
 	{Called when a key has been remapped}
+
+	; ...
+endEvent
+
+; @implements SKI_ConfigBase
+event OnOptionInputOpen(int a_option)
+	{Called when a text input option has been selected}
+
+	; ...
+endEvent
+
+; @implements SKI_ConfigBase
+event OnOptionInputAccept(int a_option, string a_input)
+	{Called when a new text input has been accepted}
 
 	; ...
 endEvent
